@@ -1,0 +1,38 @@
+<html></head><title>MRC2TIFF.sh</title></head><body><a name="TOP"></a><pre>
+MRC2TIFF (1)                General Commands Manual                 MRC2TIFF (1)
+
+
+<b>NAME</b>
+       MRC2TIFF.sh - Create TIFF files from a folder of MRC image files using
+       iMOD's mrc2tif function.
+
+<b>SYNOPSIS</b>
+       MRC2TIFF.sh [-p &lt;num&gt;] src [dest]
+
+<b>DESCRIPTION</b>
+       iMOD's mrc2tif function creates a TIFF file from a single MRC file.
+       MRC2TIFF.sh process a directory rather than a single file.  It accepts a
+       dir as it's input, searches for all MRC files inside that dir, splits the
+       list of found MRC files into a number of parts, and runs each part
+       in parallel.  A dir structure matching the source dir structure is
+       created with in the destination dir, and the resulting TIFFs are saved
+       into this dir layout.  Running each part in parallel potentially speeds
+       up the conversion process depending on avaibale CPU cores.  The '-p' flag
+       can be set to '1' if a single conversion process is required.
+
+       iMODs mrc2tif function is called with the '-s -c 5' flags.
+       '-s' give a single TIFF file (stack) out per MRC file.
+       '-c 5' specifies LZW (lossless) compression.
+
+<b>OPTIONS</b>
+       <b>-p</b> <i>number</i>
+              Split the found MRC files into this number of parts to be run in
+              parallel.  A default value can be set via the 'defaultPartCount'
+              variable at the start of the script.
+
+       <b>src</b>    Path to project dir of MRC files to be converted.
+
+       <b>dest</b>   Path to output dir for tiff files.  Project dir + subfolder
+              structure will be created underneath this dir.  A default location
+              can be set via the 'defaultDestination' variable at the start of
+              the script.
