@@ -1,57 +1,41 @@
-### TransferScript ###
-A wrapper script for RClone to allow for automated, parallel file transfers.
-Designed for easy configuration and reuse via the associated 'config.json' file.
-
-Logs transfers and sends an alert email on errors.
-
-Can be configured with a list of transfers so multiple source and destination pairs can be managed with a single instance if desired.
+### MRC to TIFF Conversion ###
+A wrapper script for iMODs mrc2tif function.  Converts all mrc files within a folder to tiff.
+Allows for parallel conversion.
 
 
 
 
 ### Requirements ###
-Python 3.8+			($ sudo dnf install python38)
-RClone v1.61.1+			($ curl -O https://downloads.rclone.org/rclone-current-linux.amd.zip)
+IMOD			(https://bio3d.colorado.edu/imod/)
 
 
 
 
 ### Download Commands ###
 $ cd ~/Downloads
-$ git clone https://github.com/Characterisation-Virtual-Labratory/Data-Movement-Automation
+$ git clone https://github.com/Characterisation-Virtual-Labratory/MRC-to-TIFF-Conversion
 
 
 
 
 ### Install Commands ###
-$ cd ~/Downloads/Data-Movement-Automation
-$ sudo ./INSTALL.sh
+$ cd ~/Downloads/MRC-to-TIFF-Conversion
+$ cp ./MRC2TIFF.sh /desired/location
 
 
 
 
 ### Configuration ###
 Edit the following files:
-	/usr/local/scripts/TransferScript/config.json
-		This is where most of your transfer settings are defined.
-	/usr/local/scripts/TransferScript/excludes.txt
-		Any files / folders you want to exclude from the transfers.
-	/etc/systemd/system/TransferScript.service
-		Set "User=<user_to_run_as>" for the script and RClone transfer.
-	/etc/systemd/system/TransferScript.timer
-		Set when you want this to run.
-
-Fix ownership:
-	$ sudo chown -R <user_to_run_as> /usr/local/scripts/TransferScript
-
-Add any required endpoints into rclone (not required for local src / dest):
-	$ su <user_to_run_as>
-	$ export RCLONE_CONFIG=/usr/local/scripts/TransferScript/rclone.conf
-	$ rclone config
-		See: https://rclone.org/commands/rclone_config/
+	/desired/location/MRC2TIFF.sh
+		Option to set a default output location.
+                Can be specified at command line.
 
 
 
 
-### Enable ###
-$ sudo systemctl enable TransferScript.timer
+### Command ###
+$ /desired/location/MRC2TIFF.sh [-p n] /src [/dest]
+	-p n		Split the found MRC files into this man groups to be run in parallel.
+	/src		Path to source dataset of MRC files.
+	/dest		Path to output dir for tiff files.  Project dir + subfolders will be created here.
